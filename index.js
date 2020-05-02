@@ -113,6 +113,10 @@ type Author {
       id: ID
       genres: [String!]
     ): Book
+    editAuthor(
+      name: String!
+      setBornTo: Int!
+    ): Author
   }
 `
 
@@ -128,10 +132,12 @@ const resolvers = {
     addBook:(root,args) => {
       const book = { ...args, id: uuidv4() }
       authors.find(author=> author.name === args.author) ? "":authors = authors.concat({name: args.author,id:uuidv4()})
-      console.log('authors',authors)
       books = books.concat(book)
-      console.log('book',books)
       return book
+    },
+    editAuthor:(root,args) => {
+      const author = authors.find(author=> author.name === args.name)
+      return author ? {...author, born:args.setBornTo} : null;
     }
   }
 }
