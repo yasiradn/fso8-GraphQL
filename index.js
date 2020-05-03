@@ -137,8 +137,9 @@ const resolvers = {
       return book
     },
     editAuthor:(root,args) => {
-      const author = authors.find(author=> author.name === args.name)
-      return author ? {...author, born:args.setBornTo} : null;
+      const author = authors.find(author=> author.name.trim() === args.name.trim())
+      authors = authors.map(a=>a.name===author.name? {...author, born:args.setBornTo}: a)
+      return author
     }
   }
 }
